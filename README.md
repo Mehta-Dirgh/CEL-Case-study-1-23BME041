@@ -1,286 +1,143 @@
-📌 Flow Rate Modeling Using Nonlinear Power Law
-📖 Overview
-
-This project focuses on estimating parameters in the nonlinear model:
-
-𝑄
-=
-𝐴
-(
-𝑉
-−
-𝑐
-)
-𝑏
-Q=A(V−c)
-b
-
-where:
-
-𝑄
-Q = Flow rate
-
-𝑉
-V = Measured voltage
-
-𝑐
-c = Offset voltage
-
-𝐴
-A = Scaling constant
-
-𝑏
-b = Nonlinear exponent
-
-The objective is to determine the optimal value of the exponent 
-𝑏
-b such that multiple experimental trials produce consistent flow integrals.
-
-The model is solved using the Bisection Method in MATLAB.
-
-🧠 Problem Description
-
-Voltage signals from multiple trials follow an exponential decay behavior.
-To estimate flow rate from voltage, the nonlinear power-law relationship is applied:
-
-𝑄
-=
-𝐴
-(
-𝑉
-−
-𝑐
-)
-𝑏
-Q=A(V−c)
-b
-
-To calibrate the system:
-
-The integral of flow rate over time is computed:
-
-𝐼
-𝑗
-=
-∫
-𝑄
- 
-𝑑
-𝑡
-=
-∫
-𝐴
-(
-𝑉
-𝑗
-−
-𝑐
-)
-𝑏
-𝑑
-𝑡
-I
-j
-	​
-
-=∫Qdt=∫A(V
-j
-	​
-
-−c)
-b
-dt
-
-Since 
-𝐴
-A is constant across trials, consistency requires:
-
-Minimize variation among 
-𝐼
-𝑗
-Minimize variation among I
-j
-	​
-
-
-Therefore, the optimal exponent 
-𝑏
-b is found by minimizing:
-
-𝑓
-(
-𝑏
-)
-=
-1
-𝑛
-∑
-(
-𝐼
-𝑗
-−
-𝐼
-ˉ
-)
-2
-f(b)=
-n
-1
-	​
-
-∑(I
-j
-	​
-
-−
-I
-ˉ
-)
-2
-	​
-
-⚙️ Methodology
-1️⃣ Data Generation
-
-Simulated voltage decay data
-
-5 experimental trials
-
-Different time durations
-
-Sampling frequency: 100 Hz
-
-2️⃣ Numerical Integration
-
-Discrete summation used:
-
-𝐼
-𝑗
-≈
-∑
-(
-𝑉
-𝑗
-−
-𝑐
-)
-𝑏
- 
-Δ
-𝑡
-I
-j
-	​
+# 📌 Flow Rate Modeling Using Nonlinear Power Law
 
-≈∑(V
-j
-	​
+## 📖 Overview
 
-−c)
-b
-Δt
-3️⃣ Optimization Using Bisection Method
+This project implements parameter estimation for the nonlinear flow model:
 
-Initial bounds: 0.5 ≤ b ≤ 3
+\[
+Q = A (V - c)^b
+\]
 
-Tolerance: 0.001
+Where:
 
-Iterative interval halving
+- **Q** = Flow rate  
+- **V** = Measured voltage  
+- **c** = Voltage offset  
+- **A** = Scaling constant  
+- **b** = Nonlinear exponent  
 
-Convergence monitored using:
+The goal of this study is to determine the optimal exponent **b** such that flow integrals computed from multiple trials remain consistent. The solution is obtained using the **Bisection Method** in MATLAB.
 
-Error
-=
-∣
-𝑏
-𝑢
-−
-𝑏
-𝑙
-∣
-Error=∣b
-u
-	​
+---
 
-−b
-l
-	​
+## 🧠 Problem Statement
 
-∣
-📊 Results
+Experimental voltage signals follow a decaying behavior over time.  
+To model flow rate from voltage measurements, a nonlinear power-law relationship is assumed:
 
-The script produces:
+\[
+Q = A (V - c)^b
+\]
 
-🔹 Objective Function Plot
+For each trial:
 
-Shows 
-𝑓
-(
-𝑏
-)
-f(b) vs exponent 
-𝑏
-b
+\[
+I_j = \int Q \, dt = \int A (V_j - c)^b \, dt
+\]
 
-Marks optimal exponent
+To ensure calibration consistency across multiple trials, the exponent **b** is selected such that the variation among computed integrals is minimized.
 
-Confirms minimum visually
+The objective function minimized is:
 
-🔹 Error Convergence Plot
+\[
+f(b) = \sqrt{\frac{1}{n} \sum (I_j - \bar{I})^2}
+\]
 
-Displays error reduction per iteration
+---
 
-Shows tolerance line
+## ⚙️ Methodology
 
-Highlights final converged solution
+### 1️⃣ Voltage Data Generation
+- 5 simulated experimental trials
+- Exponential decay signals
+- Sampling frequency: 100 Hz
+- Different trial durations
 
-Demonstrates numerical stability
+### 2️⃣ Numerical Integration
+Discrete approximation is used:
 
-🧪 Parameter Values
-Parameter	Value
-Offset (c)	0.5
-Sampling Frequency	100 Hz
-Number of Trials	5
-Syringe Volume	3
-Tolerance	0.001
-🏁 Final Outputs
+\[
+I_j \approx \sum (V_j - c)^b \Delta t
+\]
 
-✅ Optimal exponent 
-𝑏
-b
+### 3️⃣ Bisection Method
+- Initial bounds: 0.5 ≤ b ≤ 3
+- Tolerance: 0.001
+- Iterative interval halving
+- Convergence monitored using:
 
-✅ Scaling constant 
-𝐴
-A
+\[
+\text{Error} = |b_u - b_l|
+\]
 
-✅ Convergence validation
+---
 
-✅ Graphical verification
+## 📊 Outputs
 
-📚 Concepts Used
+### 🔹 Objective Function Plot
+- f(b) vs exponent b  
+- Optimal exponent highlighted  
+- Visual confirmation of minimum  
 
-Nonlinear Modeling
+### 🔹 Error Convergence Plot
+- Error vs iteration number  
+- Tolerance line shown  
+- Final converged point marked  
+- Demonstrates stability of Bisection Method  
 
-Power-Law Relationships
+---
 
-Numerical Integration
+## 🧪 Parameters Used
 
-Bisection Method
+| Parameter | Value |
+|------------|--------|
+| Offset (c) | 0.5 |
+| Sampling Frequency | 100 Hz |
+| Number of Trials | 5 |
+| Syringe Volume | 3 |
+| Tolerance | 0.001 |
 
-Error Convergence Analysis
+---
 
-Parameter Calibration
+## 🏁 Results
 
-🚀 Applications
+- Optimal exponent **b** computed numerically  
+- Scaling constant **A** determined from reference integral  
+- Convergence verified within specified tolerance  
+- Graphical validation included  
 
-This modeling approach is useful for:
+---
 
-Flow sensor calibration
+## 📚 Concepts Applied
 
-Biomedical infusion systems
+- Nonlinear Modeling  
+- Power-Law Systems  
+- Numerical Integration  
+- Bisection Method  
+- Error Convergence Analysis  
+- Parameter Estimation  
 
-Syringe pump modeling
+---
 
-Experimental data fitting
+## 🚀 Applications
 
-Nonlinear system identification
+- Flow sensor calibration  
+- Biomedical infusion systems  
+- Syringe pump modeling  
+- Nonlinear data fitting  
+- Experimental system identification  
+
+---
+
+## ▶️ How to Run
+
+1. Open MATLAB
+2. Run the provided `.m` script
+3. Observe iteration outputs in Command Window
+4. Analyze generated plots
+
+---
+
+## 📌 Author
+
+Developed as part of a numerical modeling and calibration case study using MATLAB.
